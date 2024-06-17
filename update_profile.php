@@ -38,6 +38,11 @@ require_once 'app/classes/Post.php';
 
     <div class="container mb-5" style="margin-top: 150px;">
         <div class="row">
+            <div class="col-md-12 text-right">
+                <a href="delete_user.php?id=<?php echo $show['id']?>">Delete Profile</a>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-3 profile-card mb-5" style=" background-color: #143cda; color: white;">
                 <div class="text-center">
                    <?php if ($show['photo_path']==NULL){?>
@@ -48,6 +53,7 @@ require_once 'app/classes/Post.php';
                 </div>
             </div>
             <div class="col-md-8 mt-4" style="margin-left: 40px">
+                
             <form action="update_profile.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">First Name</label>
