@@ -8,7 +8,7 @@ require_once 'app/classes/User.php';
         header('location: index.php');
     }
 
-    $user=new Post();
+    $user=new User();
 
     if(isset($_GET['id'])){
 
