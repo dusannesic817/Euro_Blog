@@ -10,4 +10,3 @@ require_once "Connection.php";
 $configuration=new Configuration('localhost','root','','euro');
 $connection= new Connection($configuration);
 
-//$connection->getConnection();

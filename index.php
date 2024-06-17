@@ -1,11 +1,30 @@
 <?php
 require_once 'inc/header.php';
-?>
-<div class="container mt-5">  
-    <div class="row">
 
+?>
+ <?php
+      if(isset($_SESSION['succsses_reg']) || isset($_SESSION['login_success'])):?>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <?php 
+        if(isset($_SESSION['succsses_reg'])){
+          echo $_SESSION['succsses_reg'];
+          unset($_SESSION['succsses_reg']);
+          }elseif(isset($_SESSION['login_success'])){
+            echo $_SESSION['login_success'];
+          unset($_SESSION['login_success']);
+          }
+  ?>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<?php endif?>
+
+<div class="container mt-5">
+
+    <div class="row">
       <div id="myModal"></div>
-      <div class="col-md-12">
+      <div class="col-md-12">   
           <h5>Top Topics</h5>
           <div class="border-bottom"></div>
       </div>

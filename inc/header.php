@@ -1,3 +1,7 @@
+<?php
+  require_once 'app/database/DbConnection.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +38,16 @@
             </li>
         </ul>     
         <ul class="navbar-nav">
+          <?php
+            if(isset($_SESSION['id'])){
+          ?>
+            <li class="nav-item">
+              <a class="nav-link" href="create_post.php" style="color:white;">Create</a>
+            </li>
+          <?php
+          }
+          ?>
+
             <li class="nav-item">
               <a class="nav-link" href="javascript:void(0)" id="loginLink" data-bs-toggle="modal" data-bs-target="#logModal" style="color:white;">Login</a>
             </li>

@@ -70,6 +70,14 @@ footer {
   border-color:#ffca00;
 }
 
+.sing-register-form textarea{
+    border-color:#ffca00;
+  }
+
+  .sing-register-form textarea::placeholder {
+    color: #143cda;
+}
+
 .custom-button {
     background-color: transparent;
     color: #143cda; 
