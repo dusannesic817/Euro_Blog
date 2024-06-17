@@ -1,19 +1,19 @@
 <?php
 
 require_once 'app/database/DbConnection.php';
-require_once 'app/classes/Post.php';
+require_once 'app/classes/User.php';
 
 
     if(!isset($_SESSION['id'])){
         header('location: index.php');
     }
 
-    $post=new Post();
+    $user=new Post();
 
     if(isset($_GET['id'])){
 
         $id=$_GET['id'];
-        $delete=$post->delete($id);
+        $delete=$user->delete($id);
 
         $_SESSION['succsses_delete']="Successfully deleted user";
         header('location: index.php');
