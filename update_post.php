@@ -4,7 +4,14 @@ require_once 'app/classes/Post.php';
 
    $post=new Post();
 
-   
+   if(isset($_GET['id'])){
+
+        $post_id=$_GET['id'];
+
+        $show=$post->show($post_id);
+
+
+   }
 
 
 ?>
@@ -38,7 +45,7 @@ require_once 'app/classes/Post.php';
                                 <div class="border-bottom"></div>
                             </div>
                         </div>
-                        <form action="create_post.php" method="POST"  enctype="multipart/form-data" >
+                        <form action="update_post.php" method="POST"  enctype="multipart/form-data" >
                         <div class="row mt-5">
                             <div class="col-md-2"><h5>Name</h5></div>
                             <div class="col-md-5">
@@ -47,7 +54,7 @@ require_once 'app/classes/Post.php';
                                     type="text"
                                     name='title' 
                                     class="form-control"
-                                    value=""
+                                    value="<?php echo $show['title']?>"
                                     />
                                 </div>
                             </div>
@@ -59,8 +66,8 @@ require_once 'app/classes/Post.php';
                                 name="text" 
                                 id="text"
                                 class="form-control"
-                                value=""
-                                rows="4"></textarea>                
+                                  placeholder="<?php echo $show['text']?>"
+                                rows="10"></textarea>                
                             </div>
                         </div>
                         <div class="row mt-4">
@@ -71,7 +78,7 @@ require_once 'app/classes/Post.php';
                                     type="text"
                                     name='tag' 
                                     class="form-control"
-                                    value=""
+                                      value="<?php echo $show['tag']?>"
                                     />
                                 </div>
                             </div>
@@ -110,8 +117,5 @@ require_once 'app/classes/Post.php';
             </div>
         </div>
         
-
-        <?php
-require_once 'inc/footer.php';
-?>
+        <?php require_once 'inc/footer.php'; ?>
     

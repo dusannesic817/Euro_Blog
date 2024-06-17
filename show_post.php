@@ -2,28 +2,60 @@
 require_once 'inc/header.php';
 require_once 'app/classes/Post.php';
 require_once 'app/classes/User.php';
+require_once 'app/classes/Visitor.php';
+require_once 'app/classes/Comment.php';
 
     $post=new Post();
     $user= new User();
-
+    $visitor= new Visitor();
+    $comment= new Comment();
 
     if(isset($_GET['id'])){
 
         $post_id=$_GET['id'];
+        $_SESSION['post_id']=$_GET['id'];
 
-       
         $show=$post->show($post_id);
         $user_id=$show['user_id'];
         $users=$user->show($user_id);
 
-     
-
     }
 
+    if($_SERVER['REQUEST_METHOD']=="POST"){
+
+        if(isset($_SESSION['id'])){
+            $user_id=$_SESSION['id'];
+            $visitor_id=NULL;
+        }else{
+
+            $name = isset($_POST['name']) ? $_POST['name'] : null;
+            $email = isset($_POST['email']) ? $_POST['email'] : null;
+            $create = $visitor->create($name, $email);
+
+            if($create) {
+                $visitor_id = isset($_SESSION['last_insert_visitor']) ? $_SESSION['last_insert_visitor'] : null;
+                $user_id = null; 
+            }else {
+                
+                echo "Failed to create visitor.";
+                exit();
+            }
+
+        }
+        $post_id=$_SESSION['post_id'];
+
+        $text = $_POST['comment'];
+        $create_comment = $comment->create($user_id, $visitor_id, $post_id, $text);
+           
+        if($create_comment) {
+            header("Location: show_post.php?id=" . $_SESSION['post_id']);
+
+        } 
+
+    }
     
-   
-
-
+    $show_comments=$comment->show($post_id);
+    $count=$comment->count($post_id);
 ?>
     
 <div class="container mt-5 mt-5">
@@ -63,7 +95,18 @@ require_once 'app/classes/User.php';
         </div>
 
     </div>
-
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-end">
+                <?php
+                if($_SESSION['id']== $show['user_id']){
+                ?>
+                <div><a href="update_post.php?id=<?php echo $post_id?>">Edit <i class="fa-solid fa-pencil fa"></i></a></div>
+                <?php }?>
+                <div></div>
+            </div>
+        </div>
+    </div>
     <div class="row mt-2">
         <div class="col-md-12">
             <div class="card">
@@ -82,67 +125,90 @@ require_once 'app/classes/User.php';
             </div>
         </div>
     </div>
-    
-    
-    <form action="##" method="POST">
-    <div class="row mt-2">
-        <div class="col-md-8">
-            <div class="card  border-0">
-                <div class="card-body">
-                    <div class="card-title">Leave Comment</div>            
-                        <textarea 
-                        name="comment" 
-                        id="description"
-                        class="form-control"
-                        rows="6"></textarea>
+    <form action="show_post.php" method="POST">
+        <div class="row mt-2">
+            <div class="col-md-8">
+                <div class="card  border-0">
+                    <div class="card-body">
+                        <div class="card-title">Leave Comment</div>
+                           
+                            <textarea 
+                            name="comment" 
+                            id="description"
+                            class="form-control"
+                            rows="6"></textarea>
+                    </div>
                 </div>
             </div>
-        </div>  
-        <div class="col-md-4">
-            <div class="card  border-0">
-                <div class="card-body">
-                    <div class="mt-4">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                        
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Full Name</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Full Name">
+            <?php if(!isset($_SESSION['id'])) {?>  
+            <div class="col-md-4">
+                <div class="card  border-0">
+                    <div class="card-body">
+                        <div class="mt-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Full Name</label>
+                                <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Full Name">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>     
-    </div>
-    <button type="submit" class=" mt-2 buttons" style="margin-left: 20px;">Leave Comment</button>
-</form>
+            <?php } ?>    
+        </div>
+        <button type="submit" class=" mt-2 buttons" style="margin-left: 20px;">Leave Comment</button>
+    </form>
     <div class="row mt-5">
         <div class="col-md-12">
-            <h5 class="mb-2" style="color:#ffca00;">285 COMMENTS</h5>
-            <div class="border-bottom"></div>
-           
+            <h5 class="mb-2" style="color:#ffca00;">COMMENTS <?php echo $count?></h5>
+            <div class="border-bottom"></div>   
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-bottom:100px">
+       
             <div class="col-10">
+            <?php foreach($show_comments as $comment){
+                $time=strtotime($comment['created_at']);
+                $format_date=date('j M, Y',$time);
+
+                   $count= $comment['id']++;
+
+                ?>
                 <div class="card custom-border">
                     <div class="card-body">
-                        <div class="card-title">Dusan Nesic</div>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <small class="card-text">19 May, 2024</small>
+                        <div class="card-title">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <?php
+                                    if ($comment['visitor_id'] == NULL) {
+                                        echo $comment['user_first_name'];
+                                    } else {
+                                        echo $comment['visitor_name'];
+                                    }
+                                    ?>
+                                </div>
+                                <div>
+                                    <?php if ($_SESSION['id'] == $comment['user_id']) { ?>
+                                        <div class="d-flex">
+                                            <div><a href="">Edit <i class="fa-solid fa-pencil fa"></i></a></div>
+                                            <div style="margin-left:10px;"><a href="">Delete <i class="fa-solid fa-trash fa"></i></a></div>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="card-text"><?php echo $comment['text']?></p>
+                        <small class="card-text"><?php echo $format_date?></small>
                     </div>
-                </div>        
-                <div class="card custom-border">
-                    <div class="card-body">
-                        <div class="card-title">Dusan Nesic</div>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <small class="card-text">19 May, 2024</small>
-                    </div>
-                </div>
+                </div> 
+                <?php }?>      
                 
             </div>
+           
         </div>
 </div>
 <?php

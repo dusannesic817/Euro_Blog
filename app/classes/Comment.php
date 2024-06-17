@@ -31,9 +31,13 @@ class Comment{
         $sql="SELECT 
                 comments.text as text,
                 comments.created_at as created_at,
+                comments.id as id,
+                comments.post_id as post_id,
                 users.first_name as user_first_name,
                 users.last_name as user_last_name,
-                visitors.name as visitor_name
+                visitors.name as visitor_name,
+                visitors.id as visitor_id,
+                comments.user_id as user_id
                 FROM 
                     comments
                 LEFT JOIN 
@@ -45,7 +49,7 @@ class Comment{
         $stmt = $this->connection->getConnection()->prepare($sql);
         $stmt->bind_param('i', $id);
         $stmt->execute();
-        $stmt->execute();
+
 
         $result = $stmt->get_result();
 
@@ -75,5 +79,27 @@ class Comment{
         $stmt->bind_param("ii", $id,$user_id);
         $stmt->execute();
     }
+
+    public function count($id){
+        $sql = "SELECT COUNT(comments.id) as comment_count
+                FROM 
+                    comments
+                WHERE 
+                    comments.post_id = ?";
+    
+        $stmt = $this->connection->getConnection()->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+    
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['comment_count'];
+        } else {
+            return 0;
+        }
+    }
+    
 
 }

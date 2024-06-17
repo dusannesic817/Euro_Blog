@@ -14,7 +14,6 @@ require_once 'app/classes/Post.php';
 
        $show=$user->show($id);
 
-      
     }
 
     $posts=$post->fetch_user_posts($id);
@@ -23,8 +22,6 @@ require_once 'app/classes/Post.php';
         $user_id=$post['user_id'];
     }
 
-   
-   
 ?>
         
     <div class="container mb-5" style="margin-top: 150px;">
@@ -54,7 +51,7 @@ require_once 'app/classes/Post.php';
                   </div>
             </div>    
         </div>
-        <div class="border-bottom mt-5"></div>
+            <div class="border-bottom mt-5"></div>
         <div class="row mt-5">
             <div class="col-md-12" style="text-align: center;">
                 <h4>Posts By <?php echo $show['first_name']." ". $show['last_name'] ?></h4>
@@ -67,35 +64,33 @@ require_once 'app/classes/Post.php';
                     $format_date=date('j M, Y',$time);                
             ?>
             <div class="col-12 col-md-6 mb-3">
-              <div class="card h-100">
-                  <div class="card-header bg-transparent">
-                      <small><?php echo $format_date ?> | </small>
-                      <small>By <?php echo $value['name']." " . $value['surname']?></small>
-                  </div>
-                  <?php
-                    if($value['img']==NULL){             
-                    ?>
-                    <img class="card-img-top" src="public/images/euro_finalists.jpeg" alt="Card image cap">
+                <div class="card h-100">
+                    <div class="card-header bg-transparent">
+                        <small><?php echo $format_date ?> | </small>
+                        <small>By <?php echo $value['name']." " . $value['surname']?></small>
+                    </div>
                     <?php
-                    }else{
-                    ?>
-                    <img class="card-img-top" src="public/images/<?php echo $value['img']?>" alt="Card image cap">
-                    <?php }?>
-                  <div class="card-body">
-                      <h5 class="card-text"><?php echo $value['title']?></h5>
-                      <p id="card-text" class="card-text short-text"> <?php echo $value['text']?></p>
-                      <div><a href="show_post.php?id=<?php echo $value['id']?>" class="btn btn-link" style="text-decoration: none;">READ MORE</a></div>
-                  </div>
-                  <div class="card-footer bg-transparent d-flex align-items-end justify-content-end">
-                      <small style="margin-right: 0.5rem;">Like(<?php echo $value['count_mark_1']?>)</small>
-                      <small> Dislike (<?php echo $value['count_mark_0']?>)</small>
-                  </div>
-              </div>
-              </div>
-              <?php
-                }
-            ?>
-            </div>      
+                        if($value['img']==NULL){             
+                        ?>
+                        <img class="card-img-top" src="public/images/euro_finalists.jpeg" alt="Card image cap">
+                        <?php
+                        }else{
+                        ?>
+                        <img class="card-img-top" src="public/images/<?php echo $value['img']?>" alt="Card image cap">
+                        <?php }?>
+                    <div class="card-body">
+                        <h5 class="card-text"><?php echo $value['title']?></h5>
+                        <p id="card-text" class="card-text short-text"> <?php echo $value['text']?></p>
+                        <div><a href="show_post.php?id=<?php echo $value['id']?>" class="btn btn-link" style="text-decoration: none;">READ MORE</a></div>
+                    </div>
+                    <div class="card-footer bg-transparent d-flex align-items-end justify-content-end">
+                        <small style="margin-right: 0.5rem;">Like(<?php echo $value['count_mark_1']?>)</small>
+                        <small> Dislike (<?php echo $value['count_mark_0']?>)</small>
+                    </div>
+                </div>
+            </div>
+              <?php }?>
+        </div>      
     </div>
 
 <?php
