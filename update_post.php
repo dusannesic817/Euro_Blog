@@ -2,28 +2,9 @@
 require_once 'inc/header.php';
 require_once 'app/classes/Post.php';
 
-    if($_SERVER['REQUEST_METHOD']=='POST'){
+   $post=new Post();
 
-        $user_id=$_SESSION['id'];
-        $title=$_POST['title'];
-        $text=$_POST['text'];
-        $tag=$_POST['tag'];
-
-        $post= new Post();
-
-        $create=$post->create($user_id,$title,$text,$tag);
-     
-        if ($create) {
-            $_SESSION['success_post'] = "Your post created successfully";
-        } else {
-            $_SESSION['error_post'] = "Unsuccessful post creation";
-        }
-    
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
-    }
-
-
+   
 
 
 ?>

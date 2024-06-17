@@ -1,23 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
-    var cardText = document.getElementById('card-text');
-   
-    var maxChars = 200;
-    var trimmedText = cardText.textContent.substring(0, maxChars).trim();
+    var cardTextElements = document.querySelectorAll('.short-text');
 
- 
-    if (cardText.textContent.length > maxChars) {
-        trimmedText += '...';
-    }
-    cardText.textContent = trimmedText;
+    cardTextElements.forEach(function (cardTextElement) {
+        var maxChars = 200;
+        var trimmedText = cardTextElement.textContent.trim();
 
-    const readMoreLink = document.getElementById('read-more');
+        if (trimmedText.length > maxChars) {
+            trimmedText = trimmedText.substring(0, maxChars).trim() + '...';
+        }
 
-    readMoreLink.addEventListener('mouseenter', () => {
-        readMoreLink.classList.add('underline-animation');
+        cardTextElement.textContent = trimmedText;
     });
 
-    readMoreLink.addEventListener('mouseleave', () => {
-        readMoreLink.classList.remove('underline-animation');
+    var readMoreLinks = document.querySelectorAll('.read-more-link');
+
+    readMoreLinks.forEach(function (readMoreLink) {
+        readMoreLink.addEventListener('mouseenter', function () {
+            this.classList.add('underline-animation');
+        });
+
+        readMoreLink.addEventListener('mouseleave', function () {
+            this.classList.remove('underline-animation');
+        });
     });
 });
 
@@ -25,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
    
     var registerLink = document.getElementById('registerLink');
     var loginLink = document.getElementById('loginLink');
-
 
     function loadAndShowModal(url, modalSelector) {
         var xhr = new XMLHttpRequest();

@@ -1,5 +1,29 @@
 <?php
 require_once 'inc/header.php';
+require_once 'app/classes/Post.php';
+require_once 'app/classes/User.php';
+
+    $post=new Post();
+    $user= new User();
+
+
+    if(isset($_GET['id'])){
+
+        $post_id=$_GET['id'];
+
+       
+        $show=$post->show($post_id);
+        $user_id=$show['user_id'];
+        $users=$user->show($user_id);
+
+     
+
+    }
+
+    
+   
+
+
 ?>
     
 <div class="container mt-5 mt-5">
@@ -33,8 +57,8 @@ require_once 'inc/header.php';
         
             <!-- Tekst unutar diva -->
             <div class="mt-5">
-                <h5 class="mb-5 text-center">Dusan Nesic</h5>
-                <small>About: dasdasdadasdasdasdfdasdasdasdasdasd</small>
+                <h5 class="mb-5 text-center"><?php echo $users['first_name']." " . $users['last_name']?></h5>
+                <small><?php echo $users['about']?></small>
             </div>
         </div>
 
@@ -44,10 +68,8 @@ require_once 'inc/header.php';
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title" style="color:#ffca00;">Card title</h5>
-                    <p class="card-text">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                        The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
-                    </p>
+                    <h5 class="card-title" style="color:#ffca00;"><?php echo $show['title']?></h5>
+                    <p class="card-text"><?php echo $show['text']?></p>
                 </div>
               </div>
         </div>       

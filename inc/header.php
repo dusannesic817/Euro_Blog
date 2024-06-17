@@ -16,7 +16,7 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light ">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="index.php">
         <img src="public/images/logo_euro_nav.png" width="260" height="90" class="d-inline-block align-top" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

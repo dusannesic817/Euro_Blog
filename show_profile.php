@@ -2,6 +2,29 @@
 
 <?php
 require_once 'inc/header.php';
+require_once 'app/classes/User.php';
+require_once 'app/classes/Post.php';
+
+
+    $user=new User();
+    $post=new Post();
+
+    if(isset($_GET['id'])){
+        $id=$_GET['id'];
+
+       $show=$user->show($id);
+
+      
+    }
+
+    $posts=$post->fetch_user_posts($id);
+
+    foreach($posts as $post){
+        $user_id=$post['user_id'];
+    }
+
+   
+   
 ?>
         
     <div class="container mb-5" style="margin-top: 150px;">
@@ -12,64 +35,67 @@ require_once 'inc/header.php';
                 </div>
             </div>
             <div class="col-md-6">
-                <h5 class="p-2">Dusan Nesic</h5>
-                    <p class="p-2"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                        It was popularised in the 1960s with the release of Letraset sheets containing</p>
-                <div class="d-flex">
-                    <div class="p-2">Fb profile</div>
-                    <div class="p-2">Insta profile</div>
-                    <div class="p-2">Yt profile</div>
+            <div class="d-flex flex-row justify-content-between">
+                <div class="p-2">
+                    <h5><?php echo $show['first_name']." ". $show['last_name']?></h5>
+                </div>
+                <?php if($_SESSION['id'] == $user_id){?>
+                <div class="p-2">
+                    <div><a href="update_profile.php?id=<?php echo $id?>">Edit</a></div>
+                </div>
+                <?php } ?>                    
+            </div>
+                    <p class="p-2"><?php echo $show['about']?></p>
+                    <div class="d-flex">
+                    <div class="p-2"><i class="fa-brands fa-facebook fa-2xl"></i></div>
+                    <div class="p-2"><i class="fa-brands fa-square-instagram fa-2xl" style="color: #ae1392;"></i></div>
+                    <div class="p-2"><i class="fa-brands fa-youtube fa-2xl" style="color: #ff0000;"></i></div>
+                    <div class="p-2"><i class="fa-brands fa-x-twitter fa-2xl" style="color: #1c1c1c;"></i></div>
                   </div>
             </div>    
         </div>
         <div class="border-bottom mt-5"></div>
         <div class="row mt-5">
             <div class="col-md-12" style="text-align: center;">
-                <h4>Posts By Dusan Nesic</h4>
+                <h4>Posts By <?php echo $show['first_name']." ". $show['last_name'] ?></h4>
             </div>
         </div>
         <div class="row mt-5 justify-content-center">
+            <?php
+                foreach($posts as $value){
+                    $time=strtotime($value['created_at']);
+                    $format_date=date('j M, Y',$time);                
+            ?>
             <div class="col-12 col-md-6 mb-3">
               <div class="card h-100">
                   <div class="card-header bg-transparent">
-                      <small>19 May, 2024 | </small>
-                      <a href="#"><small>By Dusan Nesic</small></a>
+                      <small><?php echo $format_date ?> | </small>
+                      <small>By <?php echo $value['name']." " . $value['surname']?></small>
                   </div>
-                  <img class="card-img-top" src="images/euro_finalists.jpeg" alt="Card image cap">
+                  <?php
+                    if($value['img']==NULL){             
+                    ?>
+                    <img class="card-img-top" src="public/images/euro_finalists.jpeg" alt="Card image cap">
+                    <?php
+                    }else{
+                    ?>
+                    <img class="card-img-top" src="public/images/<?php echo $value['img']?>" alt="Card image cap">
+                    <?php }?>
                   <div class="card-body">
-                      <h5 class="card-text">Putovanje u Pariz</h5>
-                      <p id="card-text" class="card-text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                          It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                          It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                          with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Contrary to popular belief,
-                          Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC,
-                          making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, </p>
-                      <div><a href="card.html" class="btn btn-link" style="text-decoration: none;">READ MORE</a></div>
+                      <h5 class="card-text"><?php echo $value['title']?></h5>
+                      <p id="card-text" class="card-text short-text"> <?php echo $value['text']?></p>
+                      <div><a href="show_post.php?id=<?php echo $value['id']?>" class="btn btn-link" style="text-decoration: none;">READ MORE</a></div>
                   </div>
                   <div class="card-footer bg-transparent d-flex align-items-end justify-content-end">
-                      <small style="margin-right: 0.5rem;">Like(42)</small>
-                      <small> Dislike (3)</small>
+                      <small style="margin-right: 0.5rem;">Like(<?php echo $value['count_mark_1']?>)</small>
+                      <small> Dislike (<?php echo $value['count_mark_0']?>)</small>
                   </div>
               </div>
-            </div>
-        
-            <div class="col-12 col-md-6 mb-3">
-                <div class="card h-100">
-                    <div class="card-header bg-transparent">
-                        <small>19 May, 2024 | </small>
-                        <a href="#"><small>By Dusan Nesic</small></a>
-                    </div>
-                    <img class="card-img-top" src="public/images/profil_logos.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-text"></h5>
-                    </div>
-                    <div class="card-footer bg-transparent d-flex align-items-end justify-content-end">
-                        <small style="margin-right: 0.5rem;">Like(42)</small>
-                        <small> Dislike (3)</small>
-                    </div>
-                </div>
-            </div>
-          </div>
+              </div>
+              <?php
+                }
+            ?>
+            </div>      
     </div>
 
 <?php

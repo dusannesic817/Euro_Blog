@@ -44,8 +44,8 @@ public function create($first_name, $last_name, $about, $username, $email, $pass
             if($result->num_rows==1){
                 $row = $result->fetch_assoc();
                 $_SESSION['id'] = $row['id'];
-                if(password_verify($password,$row['password'])){
-                  
+
+                if(password_verify($password,$row['password'])){              
                     return true;
                 }
             }
@@ -56,7 +56,7 @@ public function create($first_name, $last_name, $about, $username, $email, $pass
 
     public function show($id){
 
-        $sql="SELECT `first_name`, `last_name`,`about`, `password` FROM  `users` WHERE `id`=? ";
+        $sql="SELECT `first_name`, `last_name`,`about` FROM  `users` WHERE `id`=? ";
 
         $stmt = $this->connection->getConnection()->prepare($sql);
         $stmt->bind_param('i', $id);
@@ -65,8 +65,7 @@ public function create($first_name, $last_name, $about, $username, $email, $pass
         $result = $stmt->get_result();
 
             if($result->num_rows==1){
-                $result->fetch_assoc();
-                    return true;                
+                return $result->fetch_assoc();         
             }
 
             return false;
