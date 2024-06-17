@@ -67,7 +67,7 @@ class Comment{
 
         $stmt=$this->connection->getConnection()->prepare($sql);
         $stmt->bind_param("sii",$text,$user_id,$id);
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     public function delete($id,$user_id){

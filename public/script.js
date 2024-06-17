@@ -49,7 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         xhr.send();
     }
-        registerLink.addEventListener('click', function(event) {
+
+    registerLink.addEventListener('click', function(event) {
             event.preventDefault();
             loadAndShowModal('register.php', '#regModal');
         });
@@ -59,9 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
             loadAndShowModal('login.php', '#logModal');
         });
-    } else {
-        console.error('Element with ID "loginLink" not found.');
-    }
+    } 
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -117,6 +116,32 @@ document.addEventListener('DOMContentLoaded', function() {
             button.classList.remove('thumb-animation');
         }, 500); 
     }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var editLink = document.getElementById('editLink');
+
+    editLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        var url = 'edit_comment.php';
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                
+                var modalWrapper = document.createElement('div');
+                modalWrapper.innerHTML = data;
+                
+                modalWrapper.querySelector('.modal').setAttribute('id', 'comModal');
+      
+                document.body.appendChild(modalWrapper);        
+                var comModal = new bootstrap.Modal(document.getElementById('comModal'));
+                comModal.show();
+                comModal._element.addEventListener('hidden.bs.modal', function() {
+                    document.body.removeChild(modalWrapper);
+                });
+            })
+            .catch(error => console.error('Error loading content:', error));
+    });
 });
 
 

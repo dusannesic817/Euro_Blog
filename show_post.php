@@ -195,7 +195,8 @@ require_once 'app/classes/Comment.php';
                                 <div>
                                     <?php if ($_SESSION['id'] == $comment['user_id']) { ?>
                                         <div class="d-flex">
-                                            <div><a href="edit_comment.php?id=<?php echo $comment['id']?>">Edit <i class="fa-solid fa-pencil fa"></i></a></div>
+                                        <div><a href="javascript:void(0)" id="editLink" data-toggle="modal" data-target="#comModal">Edit <i class="fas fa-pencil-alt"></i></a></div>
+
                                             <div style="margin-left:10px;"><a href="delete_comment.php?id=<?php echo $comment['id']?>">Delete <i class="fa-solid fa-trash fa"></i></a></div>
                                         </div>
                                     <?php } ?>
@@ -210,7 +211,16 @@ require_once 'app/classes/Comment.php';
             </div>
         </div>
 </div>
+
+
+<script>
+
+</script>
+
+
+
 <?php
 require_once 'inc/footer.php';
+//href="edit_comment.php?id=<?php echo $comment['id']
 ?>
     

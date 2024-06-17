@@ -18,7 +18,7 @@ for ($i = 0; $i < $uploadedFilesCount; $i++) {
     if (in_array($ext, $allowed_ext) && $photo_size < 2000000) {
         if (!move_uploaded_file($uploadedFiles["tmp_name"][$i], $photo_path)) {
             $success = false;
-            $errors[] = "Failed to move file: " . $photo_name;
+            $errors[] = "Failed to move file:".$photo_name;
         }
     } else {
         $success = false;
