@@ -1,6 +1,7 @@
 <?php
 require_once 'inc/header.php';
 require_once 'app/classes/Post.php';
+require_once 'app/classes/Image.php';
 
     if($_SERVER['REQUEST_METHOD']=='POST'){
 
@@ -10,10 +11,19 @@ require_once 'app/classes/Post.php';
         $tag=$_POST['tag'];
 
         $post= new Post();
+        $images= new Image();
+
+
+
 
         $create=$post->create($user_id,$title,$text,$tag);
-     
         if ($create) {
+            
+            $post_id = $_SESSION['last_insert_post'];
+    
+            foreach ($_POST['photo_path'] as $photo_path) {
+                $images->create($user_id, $post_id, $photo_path);
+            }   
             $_SESSION['success_post'] = "Your post created successfully";
         } else {
             $_SESSION['error_post'] = "Unsuccessful post creation";
@@ -79,7 +89,7 @@ require_once 'app/classes/Post.php';
                                 id="text"
                                 class="form-control"
                                 value=""
-                                rows="4"></textarea>                
+                                rows="15"></textarea>                
                             </div>
                         </div>
                         <div class="row mt-4">
@@ -95,25 +105,10 @@ require_once 'app/classes/Post.php';
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            <div class="col-md-2"><h5>Images</h5></div>
-                            <div class="col-md-3">
-                                <div class="input-group">
-                                    <input 
-                                    type="file" 
-                                    name="images[]" 
-                                    class="form-control"
-                                    value="{{old('images[]')}}"
-                                    multiple id="postImages" 
-                                    aria-describedby="inputGroupFileAddon04" 
-                                    aria-label="Upload"
-                                    /> 
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div id="slike-preview" class="d-flex flex-row"></div>
-                            </div>
-                        </div>
+                        <div class="col-md-12">
+                            <input type="hidden" class="form-control" name="photo_path[]" id="photoPathInput">
+                            <div id="dropzone-uploads" class="dropzone"></div>
+                        </div>  
                         <div class="row mt-5">
                             <div class="col-md-10">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -128,7 +123,29 @@ require_once 'app/classes/Post.php';
                   </div>
             </div>
         </div>
-        
+        <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+        <script>
+            Dropzone.options.dropzoneUploads = {
+                url: "upload_photos.php",
+                paramName: "photo",
+                maxFilesize: 20,
+                acceptedFiles: "image/*",
+                init: function() {
+                    this.on("success", function(file, response) {
+                        const jsonResponse = JSON.parse(response);
+                        if (jsonResponse.success) {
+                            let inputField = document.createElement("input");
+                            inputField.setAttribute("type", "hidden");
+                            inputField.setAttribute("name", "photo_path[]");
+                            inputField.setAttribute("value", jsonResponse.photo_path);
+                            document.getElementById("photoPathInput").appendChild(inputField);
+                        } else {
+                            console.error(jsonResponse.error);
+                        }
+                    });
+                }
+            };
+        </script>
 
         <?php
 require_once 'inc/footer.php';

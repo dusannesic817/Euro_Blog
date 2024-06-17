@@ -56,7 +56,7 @@ public function create($first_name, $last_name, $about, $username, $email, $pass
 
     public function show($id){
 
-        $sql="SELECT `first_name`, `last_name`,`about` FROM  `users` WHERE `id`=? ";
+        $sql="SELECT `first_name`, `last_name`,`about`,`photo_path` FROM  `users` WHERE `id`=? ";
 
         $stmt = $this->connection->getConnection()->prepare($sql);
         $stmt->bind_param('i', $id);
@@ -71,11 +71,11 @@ public function create($first_name, $last_name, $about, $username, $email, $pass
             return false;
     }
 
-    public function update($id,$first_name,$last_name,$about,$photo_path){
+    public function update($first_name,$last_name,$about,$photo_path,$id){
         $sql="UPDATE `users` SET `first_name`=?, `last_name`=?, `about`=?, `photo_path`=? WHERE `id`=?";
         $stmt=$this->connection->getConnection()->prepare($sql);
-        $stmt->bind_param("ssss",$first_name,$last_name,$about,$photo_path);
-        $stmt->execute();
+        $stmt->bind_param("ssssi",$first_name,$last_name,$about,$photo_path,$id);
+        return $stmt->execute();
     }
 
     public function delete($id){
@@ -87,6 +87,8 @@ public function create($first_name, $last_name, $about, $username, $email, $pass
         $stmt->execute();
     }
 
-
+    public function logOut(){
+        unset($_SESSION["id"]);
+    }
 
 }

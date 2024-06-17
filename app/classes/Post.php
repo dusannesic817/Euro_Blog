@@ -1,7 +1,6 @@
 <?php
 
 
-
 class Post{
 
     protected $connection;
@@ -22,8 +21,17 @@ class Post{
         $stmt=$this->connection->getConnection()->prepare($sql);
         $stmt->bind_param("isss",$user_id,$title,$text,$tag);
 
-        return $stmt->execute();
+       $result= $stmt->execute();
 
+        if ($result) {
+            $last_insert_id = $this->connection->getConnection()->insert_id;
+           
+            $_SESSION['last_insert_post'] = $last_insert_id;
+            return true;
+        } else {
+            echo "Error executing SQL: " . $stmt->error;
+            return false;
+        }
         
     }
 

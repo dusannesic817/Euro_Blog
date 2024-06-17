@@ -18,6 +18,8 @@ require_once 'app/classes/Post.php';
 
     $posts=$post->fetch_user_posts($id);
 
+   
+
     foreach($posts as $post){
         $user_id=$post['user_id'];
     }
@@ -28,7 +30,11 @@ require_once 'app/classes/Post.php';
         <div class="row">
             <div class="col-md-3 profile-card" style=" background-color: #143cda; color: white;">
                 <div class="text-center">
+                    <?php if ($show['photo_path']==NULL){?>
                     <img src="public/images/mascot.jpg" alt="" class="profile-pic">
+                    <?php }else{?>
+                    <img src="public/images/<?php echo $show['photo_path']?>" alt="" class="profile-pic">
+                    <?php }?>
                 </div>
             </div>
             <div class="col-md-6">

@@ -9,7 +9,7 @@ require_once 'app/classes/Post.php';
         $post_id=$_GET['id'];
 
         $show=$post->show($post_id);
-
+        
 
    }
 

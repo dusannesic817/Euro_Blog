@@ -8,7 +8,7 @@ require_once 'app/classes/Home.php';
 
 ?>
  <?php
-      if(isset($_SESSION['succsses_reg']) || isset($_SESSION['login_success'])):?>
+      if(isset($_SESSION['succsses_reg']) || isset($_SESSION['login_success']) || isset($_SESSION['succsses_delete'])):?>
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
   <?php 
         if(isset($_SESSION['succsses_reg'])){
@@ -17,6 +17,9 @@ require_once 'app/classes/Home.php';
           }elseif(isset($_SESSION['login_success'])){
             echo $_SESSION['login_success'];
           unset($_SESSION['login_success']);
+          }elseif(isset($_SESSION['succsses_delete'])){
+            echo $_SESSION['succsses_delete'];
+            unset($_SESSION['succsses_delete']);
           }
   ?>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">

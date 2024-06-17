@@ -102,6 +102,7 @@ require_once 'app/classes/Comment.php';
                 if($_SESSION['id']== $show['user_id']){
                 ?>
                 <div><a href="update_post.php?id=<?php echo $post_id?>">Edit <i class="fa-solid fa-pencil fa"></i></a></div>
+                <div style="margin-left: 20px;"><a href="delete_post.php?id=<?php echo $post_id?>">Delete <i class="fa-solid fa-trash fa"></i></a></div>
                 <?php }?>
                 <div></div>
             </div>
@@ -175,7 +176,7 @@ require_once 'app/classes/Comment.php';
                 $time=strtotime($comment['created_at']);
                 $format_date=date('j M, Y',$time);
 
-                   $count= $comment['id']++;
+                   $_SESSION['comment_id']=$comment['id'];
 
                 ?>
                 <div class="card custom-border">
@@ -194,8 +195,8 @@ require_once 'app/classes/Comment.php';
                                 <div>
                                     <?php if ($_SESSION['id'] == $comment['user_id']) { ?>
                                         <div class="d-flex">
-                                            <div><a href="">Edit <i class="fa-solid fa-pencil fa"></i></a></div>
-                                            <div style="margin-left:10px;"><a href="">Delete <i class="fa-solid fa-trash fa"></i></a></div>
+                                            <div><a href="edit_comment.php?id=<?php echo $comment['id']?>">Edit <i class="fa-solid fa-pencil fa"></i></a></div>
+                                            <div style="margin-left:10px;"><a href="delete_comment.php?id=<?php echo $comment['id']?>">Delete <i class="fa-solid fa-trash fa"></i></a></div>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -205,10 +206,8 @@ require_once 'app/classes/Comment.php';
                         <small class="card-text"><?php echo $format_date?></small>
                     </div>
                 </div> 
-                <?php }?>      
-                
+                <?php }?>                 
             </div>
-           
         </div>
 </div>
 <?php

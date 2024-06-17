@@ -62,11 +62,11 @@ class Comment{
 
 }
 
-    public function update($id,$user_id){
+    public function update($text,$user_id,$id){
         $sql="UPDATE `comments` SET `text`=?, `user_id`=? WHERE `id`=?";
 
         $stmt=$this->connection->getConnection()->prepare($sql);
-        $stmt->bind_param("ii",$id,$user_id);
+        $stmt->bind_param("sii",$text,$user_id,$id);
         $stmt->execute();
     }
 
@@ -77,7 +77,7 @@ class Comment{
         $stmt=$this->connection->getConnection()->prepare($sql);
 
         $stmt->bind_param("ii", $id,$user_id);
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     public function count($id){
