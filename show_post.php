@@ -99,7 +99,7 @@ require_once 'app/classes/Comment.php';
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
                 <?php
-                if($_SESSION['id']== $show['user_id']){
+                if(isset($_SESSION['id'])== $show['user_id']){
                 ?>
                 <div><a href="update_post.php?id=<?php echo $post_id?>">Edit <i class="fa-solid fa-pencil fa"></i></a></div>
                 <div style="margin-left: 20px;"><a href="delete_post.php?id=<?php echo $post_id?>">Delete <i class="fa-solid fa-trash fa"></i></a></div>
@@ -193,13 +193,18 @@ require_once 'app/classes/Comment.php';
                                     ?>
                                 </div>
                                 <div>
-                                    <?php if ($_SESSION['id'] == $comment['user_id']) { ?>
+                                    <?php if (isset($_SESSION['id']) == $comment['user_id'] && isset($_SESSION['id'])) { ?>
                                         <div class="d-flex">
-                                        <div><a href="javascript:void(0)" id="editLink" data-toggle="modal" data-target="#comModal">Edit <i class="fas fa-pencil-alt"></i></a></div>
-
+                                            <div><a href="javascript:void(0)" id="editLink" data-toggle="modal" data-target="#comModal">Edit <i class="fas fa-pencil-alt"></i></a></div>
                                             <div style="margin-left:10px;"><a href="delete_comment.php?id=<?php echo $comment['id']?>">Delete <i class="fa-solid fa-trash fa"></i></a></div>
                                         </div>
-                                    <?php } ?>
+                                    <?php }elseif(!isset($_SESSION['id'])){ ?>
+                                        <div class="d-flex">
+                                            <div></div>
+
+                                            <div></div>
+                                        </div>
+                                        <?php }?>
                                 </div>
                             </div>
                         </div>

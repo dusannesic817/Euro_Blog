@@ -19,6 +19,7 @@ class Home{
                     posts.title,
                     posts.created_at,
                     posts.text,
+                    images.image_path as images,
                     (SELECT image_path FROM images WHERE post_id = posts.id LIMIT 1) as img,
                     users.first_name as name,
                     users.last_name as surname,
@@ -26,9 +27,9 @@ class Home{
                     SUM(CASE WHEN ratings.mark = 0 THEN 1 ELSE 0 END) as count_mark_0
                 FROM 
                     posts
-                LEFT JOIN 
-                    users ON posts.user_id = users.id
+                LEFT JOIN users ON posts.user_id = users.id
                 LEFT JOIN ratings ON posts.id = ratings.post_id
+                LEFT JOIN images ON posts.id = images.post_id
                 GROUP BY
                     posts.id
                 ";

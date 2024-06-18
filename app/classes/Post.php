@@ -24,13 +24,9 @@ class Post{
        $result= $stmt->execute();
 
         if ($result) {
-            $last_insert_id = $this->connection->getConnection()->insert_id;
-           
+            $last_insert_id = $stmt->insert_id;
             $_SESSION['last_insert_post'] = $last_insert_id;
             return true;
-        } else {
-            echo "Error executing SQL: " . $stmt->error;
-            return false;
         }
         
     }

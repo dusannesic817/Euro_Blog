@@ -23,8 +23,8 @@ class Visitor{
         $result=$stmt->execute();
 
         if ($result) {
-            $last_insert_visitor = $this->connection->getConnection()->insert_id;
-            $_SESSION['last_insert_visitor'] = $last_insert_visitor;
+            $last_insert_visitor = $stmt->insert_id;
+             $_SESSION['last_insert_visitor'] = $last_insert_visitor;
             return true; 
         } else {
             return false; 

@@ -23,6 +23,7 @@ require_once 'app/classes/Post.php';
     foreach($posts as $post){
         $user_id=$post['user_id'];
     }
+    $_SESSION['show_id']=$show['id'];
 
 ?>
         
@@ -42,11 +43,20 @@ require_once 'app/classes/Post.php';
                 <div class="p-2">
                     <h5><?php echo $show['first_name']." ". $show['last_name']?></h5>
                 </div>
-                <?php if($_SESSION['id'] == $user_id){?>
+                <?php if(isset($_SESSION['id']) && $_SESSION['show_id']){
+                    if($_SESSION['id'] == $_SESSION['show_id']){
+                    ?>
+                    
                 <div class="p-2">
                     <div><a href="update_profile.php?id=<?php echo $id?>">Edit</a></div>
                 </div>
-                <?php } ?>                    
+                <?php }elseif(!isset($_SESSION['id'])){ ?>
+                    <div class="p-2">
+                    <div></div>
+                </div>
+                    <?php }
+                    }
+                    ?>
             </div>
                     <p class="p-2"><?php echo $show['about']?></p>
                     <div class="d-flex">
