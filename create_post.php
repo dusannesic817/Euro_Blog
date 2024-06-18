@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <script>
           Dropzone.options.dropzoneUploads = {
     url: "upload_photos.php",
-    paramName: "photo", // Ovo mora odgovarati imenu parametra koje Dropzone šalje
+    paramName: "photo",
     maxFilesize: 20,
     acceptedFiles: "image/*",
     init: function() {
@@ -138,7 +138,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 for (let i = 0; i < jsonResponse.photo_paths.length; i++) {
                     let inputField = document.createElement("input");
                     inputField.setAttribute("type", "hidden");
-                    inputField.setAttribute("name", "photo_path[]"); // Ovo mora biti niz kako biste mogli da dodate više slika
                     inputField.setAttribute("value", jsonResponse.photo_paths[i]);
                     document.getElementById("photoPathInput").appendChild(inputField);
                 }
