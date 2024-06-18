@@ -44,7 +44,7 @@ require_once 'app/classes/Post.php';
         </div>
         <div class="row">
             <div class="col-md-3 profile-card mb-5" style=" background-color: #143cda; color: white;">
-                <div class="text-center">
+                <div class="text-center" >
                    <?php if ($show['photo_path']==NULL){?>
                     <img src="public/images/mascot.jpg" alt="" class="profile-pic">
                     <?php }else{?>
@@ -93,9 +93,12 @@ require_once 'app/classes/Post.php';
                     rows="5"></textarea>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="form-group row">   
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Photo</label>
+                <div style="margin-left:15px">
                     <input type="hidden" class="form-control" name= "photo_path" id="photoPathInput">
                     <div id="dropzone-upload" class="dropzone"></div>
+                    </div>
                 </div>       
                     <div class="d-flex">
                         <div class="p-2"><i class="fa-brands fa-facebook fa-2xl"></i></div>

@@ -74,7 +74,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
               <div class="row mb-5 mt-5">
                   <div class="col-md-12">
                     
-                  <button type="submit" class="btn btn-warning ">Login</button>
+                  <button type="submit" class="custom-button w-100">Login</button>
                 
                   </div>
               </div>

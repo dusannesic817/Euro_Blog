@@ -142,7 +142,7 @@ require_once 'app/classes/User.php';
                   <div class="row mb-5 mt-5">
                       <div class="col-md-12">
                         
-                      <button type="submit" class="btn btn-warning ">Registration</button>
+                      <button type="submit" class="custom-button w-100">Registration</button>
                     
                       </div>
                   </div>

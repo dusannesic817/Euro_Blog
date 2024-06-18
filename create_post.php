@@ -68,61 +68,66 @@ require_once 'app/classes/Image.php';
                             </div>
                         </div>
                         <form action="create_post.php" method="POST"  enctype="multipart/form-data" >
-                        <div class="row mt-5">
-                            <div class="col-md-2"><h5>Name</h5></div>
-                            <div class="col-md-5">
-                                <div class="input-group mb-3">
-                                    <input
-                                    type="text"
-                                    name='title' 
+                            <div class="row mt-5">
+                                <div class="col-md-2"><h5>Name</h5></div>
+                                <div class="col-md-5">
+                                    <div class="input-group mb-3">
+                                        <input
+                                        type="text"
+                                        name='title' 
+                                        class="form-control"
+                                        value=""
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-2"><h5>Text</h5></div>
+                                <div class="col-md-8">
+                                    <textarea 
+                                    name="text" 
+                                    id="text"
                                     class="form-control"
                                     value=""
-                                    />
+                                    rows="15"></textarea>                
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-md-2"><h5>Text</h5></div>
-                            <div class="col-md-8">
-                                <textarea 
-                                name="text" 
-                                id="text"
-                                class="form-control"
-                                value=""
-                                rows="15"></textarea>                
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-md-2"><h5>Tags</h5></div>
-                            <div class="col-md-5">
-                                <div class="input-group mb-3">
-                                    <input
-                                    type="text"
-                                    name='tag' 
-                                    class="form-control"
-                                    value=""
-                                    />
+                            <div class="row mt-4">
+                                <div class="col-md-2"><h5>Tags</h5></div>
+                                <div class="col-md-5">
+                                    <div class="input-group mb-3">
+                                        <input
+                                        type="text"
+                                        name='tag' 
+                                        class="form-control"
+                                        value=""
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <input type="hidden" class="form-control" name="photo_path[]" id="photoPathInput">
-                            <div id="dropzone-uploads" class="dropzone"></div>
-                        </div>  
-                        <div class="row mt-5">
-                            <div class="col-md-10">
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button type="submit" class="btn btn-warning ">Post Ad</button>
-                    
+                                <div class="row mt-4">
+                                    <div class="col-md-2"><h5>Photos</h5></div>
+                                        <div class="d-flex justify-content-center align-items-center" style="margin-left:20px">
+                                            <input type="hidden" class="form-control" name="photo_path[]" id="photoPathInput">
+                                            <div id="dropzone-uploads" class="dropzone"></div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="row mt-5 mb-4">
+                                    <div class="col-md-10">
+                                        <div class="d-flex justify-content-end">
+                                            <button type="submit" class="custom-button">Post Ad</button>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
-                    </form>
+                        </form>
                     </div>
-                    </div>
-                  </div>
+                </div>
             </div>
         </div>
+    </div>
         <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
         <script>
             Dropzone.options.dropzoneUploads = {
