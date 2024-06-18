@@ -60,17 +60,17 @@ require_once 'app/classes/Comment.php';
     
 <div class="container mt-5 mt-5">
     <div class="row">
-        <div class="col-md-8" style="border: 1px solid black;">
+        <div class="col-md-8" >
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img class="d-block w-100" src="..." alt="First slide">
+                    <img class="d-block w-100" src="public/images/euro_finalists.jpeg" alt="First slide">
                   </div>
                   <div class="carousel-item">
-                    <img class="d-block w-100" src="..." alt="Second slide">
+                    <img class="d-block w-100" src="public/images/euro_finalists.jpeg"  alt="Second slide">
                   </div>
                   <div class="carousel-item">
-                    <img class="d-block w-100" src="..." alt="Third slide">
+                    <img class="d-block w-100" src="public/images/euro_finalists.jpeg"  alt="Third slide">
                   </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -81,7 +81,7 @@ require_once 'app/classes/Comment.php';
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
                 </a>
-              </div>
+            </div>
         </div>
         <div class="col-md-4 profile-card" style=" background-color: #143cda;">
             <!-- Slika koja prelazi preko gornje ivice -->
@@ -93,7 +93,6 @@ require_once 'app/classes/Comment.php';
                 <small><?php echo $users['about']?></small>
             </div>
         </div>
-
     </div>
     <div class="row mt-3">
         <div class="col-md-12">

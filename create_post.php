@@ -3,36 +3,32 @@ require_once 'inc/header.php';
 require_once 'app/classes/Post.php';
 require_once 'app/classes/Image.php';
 
-    if($_SERVER['REQUEST_METHOD']=='POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $user_id = $_SESSION['id'];
+    $title = $_POST['title'];
+    $text = $_POST['text'];
+    $tag = $_POST['tag'];
 
-        $user_id=$_SESSION['id'];
-        $title=$_POST['title'];
-        $text=$_POST['text'];
-        $tag=$_POST['tag'];
+    $post = new Post();
+    $images = new Image();
 
-        $post= new Post();
-        $images= new Image();
-
-
-
-
-        $create=$post->create($user_id,$title,$text,$tag);
-        if ($create) {
-            
-            $post_id = $_SESSION['last_insert_post'];
+    // Kreiranje posta
+    $create = $post->create($user_id, $title, $text, $tag);
     
-            foreach ($_POST['photo_path'] as $photo_path) {
-                $images->create($user_id, $post_id, $photo_path);
-            }   
-            $_SESSION['success_post'] = "Your post created successfully";
-        } else {
-            $_SESSION['error_post'] = "Unsuccessful post creation";
+    if ($create) {
+        $post_id = $_SESSION['last_insert_post'];
+
+        foreach ($_POST['photo_path'] as $photo_path) {
+            $images->create($user_id, $post_id, $photo_path);
         }
-    
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+        $_SESSION['success_post'] = "Your post created successfully";
+    } else {
+        $_SESSION['error_post'] = "Unsuccessful post creation";
     }
 
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
 
 
 
@@ -130,26 +126,30 @@ require_once 'app/classes/Image.php';
     </div>
         <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
         <script>
-            Dropzone.options.dropzoneUploads = {
-                url: "upload_photos.php",
-                paramName: "photo",
-                maxFilesize: 20,
-                acceptedFiles: "image/*",
-                init: function() {
-                    this.on("success", function(file, response) {
-                        const jsonResponse = JSON.parse(response);
-                        if (jsonResponse.success) {
-                            let inputField = document.createElement("input");
-                            inputField.setAttribute("type", "hidden");
-                            inputField.setAttribute("name", "photo_path[]");
-                            inputField.setAttribute("value", jsonResponse.photo_path);
-                            document.getElementById("photoPathInput").appendChild(inputField);
-                        } else {
-                            console.error(jsonResponse.error);
-                        }
-                    });
+          Dropzone.options.dropzoneUploads = {
+    url: "upload_photos.php",
+    paramName: "photo", // Ovo mora odgovarati imenu parametra koje Dropzone šalje
+    maxFilesize: 20,
+    acceptedFiles: "image/*",
+    init: function() {
+        this.on("success", function(file, response) {
+            const jsonResponse = JSON.parse(response);
+            if (jsonResponse.success) {
+                for (let i = 0; i < jsonResponse.photo_paths.length; i++) {
+                    let inputField = document.createElement("input");
+                    inputField.setAttribute("type", "hidden");
+                    inputField.setAttribute("name", "photo_path[]"); // Ovo mora biti niz kako biste mogli da dodate više slika
+                    inputField.setAttribute("value", jsonResponse.photo_paths[i]);
+                    document.getElementById("photoPathInput").appendChild(inputField);
                 }
-            };
+            } else {
+                console.error(jsonResponse.errors);
+            }
+        });
+    }
+};
+
+
         </script>
 
         <?php

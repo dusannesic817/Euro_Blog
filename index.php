@@ -37,31 +37,36 @@ require_once 'app/classes/Home.php';
           <div class="border-bottom"></div>
       </div>
     </div>
-   <div class="row mt-2">
-      <div class="col-md-12">
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img class="d-block w-100" src="public/images/euro_finalists.jpeg" alt="First slide">
-            </div>
-            <div class="carousel-item">
-              <img class="d-block w-100" src="public/images/profil_logos.jpg" alt="Second slide">
-            </div>
-            <div class="carousel-item">
-              <img class="d-block w-100" src="public/images/profil_logos.jpg" alt="Third slide">
-            </div>
+    <div class="row mt-2">
+  <div class="col-md-12">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <?php
+        $first = true; 
+        foreach ($index as $value) {
+        ?>
+          <div class="carousel-item <?php echo $first ? 'active' : ''; ?>">
+            <a href="show_post.php?id=<?php echo $value['id']?>"> 
+              <img class="d-block w-100" src="public/images/euro_finalists.jpeg" alt="Slide"> 
+            </a>
           </div>
-          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
+        <?php
+          $first = false; 
+        }
+        ?>
       </div>
-   </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+</div>
+
    <div class="row mt-5">
     <div class="col-md-12">
         <h5>Euro Topics</h5>
