@@ -83,11 +83,8 @@ require_once 'app/classes/Comment.php';
                 </a>
             </div>
         </div>
-        <div class="col-md-4 profile-card" style=" background-color: #143cda;">
-            <!-- Slika koja prelazi preko gornje ivice -->
-            <img src="public/images/mascot.jpg" alt="" class="profile-pic">
-        
-            <!-- Tekst unutar diva -->
+        <div class="col-md-4 profile-card" style=" background-color: #143cda;"> 
+            <img src="public/images/mascot.jpg" alt="" class="profile-pic">             
             <div class="mt-5">
                 <h5 class="mb-5 text-center"><?php echo $users['first_name']." " . $users['last_name']?></h5>
                 <small><?php echo $users['about']?></small>

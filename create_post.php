@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $post = new Post();
     $images = new Image();
 
-    // Kreiranje posta
     $create = $post->create($user_id, $title, $text, $tag);
     
     if ($create) {
